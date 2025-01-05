@@ -23,7 +23,9 @@ app.use(express_1.default.json());
 */
 // Rotas
 const routes_1 = __importDefault(require("./routes"));
+const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 app.use('/api', routes_1.default);
+app.use('/users', userRoutes_1.default); // Todas as rotas relacionadas a usuários
 // Inicialização do servidor
 const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));

@@ -23,7 +23,9 @@ app.use(express.json());
 */
 // Rotas
 import routes from './routes';
+import userRoutes from './routes/userRoutes';
 app.use('/api', routes);
+app.use('/users', userRoutes); // Todas as rotas relacionadas a usuários
 
 // Inicialização do servidor
 const PORT = process.env.PORT || 3002;
