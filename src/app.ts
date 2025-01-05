@@ -9,8 +9,8 @@ dotenv.config();
 const app: Application = express();
 
 // Middlewares
-//app.use(cors());
-//app.use(express.json());
+app.use(cors());
+app.use(express.json());
 
 // Rotas
 import routes from './routes';
