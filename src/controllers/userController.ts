@@ -3,9 +3,11 @@ import User from '../models/User';
 
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { name, email, password } = req.body;
 
-    console.log(`Body >>>> ${req.body}`);
+    console.log(`log kkkk>>> ${req}`);
+
+
+    const { name, email, password } = req.body;
 
     // Validação simples
     if (!name || !email || !password) {
@@ -13,19 +15,23 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
       return;
     }
 
-    // Checa se o usuário já existe
+    // Checar se o usuário já existe
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       res.status(400).json({ error: 'Email já está em uso' });
       return;
     }
 
-    // Cria o usuário
-    const user = new User({ name, email, password });
-    await user.save();
+    // Criar e salvar o usuário no MongoDB
+    const newUser = new User({ name, email, password });
+    const savedUser = await newUser.save();
 
-    res.status(201).json({ message: 'Usuário registrado com sucesso', user });
+    res.status(201).json({
+      message: 'Usuário registrado com sucesso',
+      user: savedUser,
+    });
   } catch (error) {
+    console.error('Erro ao registrar usuário:', error);
     res.status(500).json({ error: 'Erro interno no servidor' });
   }
 };

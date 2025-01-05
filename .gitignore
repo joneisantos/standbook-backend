@@ -8,3 +8,6 @@ echo ".env" >> .gitignore
 
 # production
 /build
+
+# dist
+/dist
