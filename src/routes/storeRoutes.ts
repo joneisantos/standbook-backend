@@ -1,8 +1,9 @@
 import { Router } from 'express';
-import { registerStore } from '../controllers/storeController';
+import { getAllStores, registerStore } from '../controllers/storeController';
 
 const router = Router();
 
 router.post('/register', registerStore);
+router.get('', getAllStores);
 
 export default router;

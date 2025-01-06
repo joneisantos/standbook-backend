@@ -31,3 +31,13 @@ export const registerStore = async (req: Request, res: Response): Promise<void> 
     res.status(500).json({ error: 'Erro interno no servidor' });
   }
 };
+
+export const getAllStores = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const stores = await Store.find(); 
+    res.status(200).json(stores);
+  } catch (error) {
+    console.error('Erro ao listar estabelecimentos:', error);
+    res.status(500).json({ error: 'Erro interno no servidor' });
+  }
+};
