@@ -15,8 +15,10 @@ app.use(express.json());
 // Rotas
 import routes from './routes';
 import userRoutes from './routes/userRoutes';
+import storeRoutes from './routes/storeRoutes';
 app.use('/api', routes);
-app.use('/users', userRoutes); // Todas as rotas relacionadas a usuários
+app.use('/users', userRoutes); 
+app.use('/stores', storeRoutes); 
 
 // Conecte-se ao MongoDB
 connectToDatabase();

@@ -1,13 +1,11 @@
 import { Router } from 'express';
 import userRoutes from './userRoutes';
-//import barbershopRoutes from './barbershopRoutes';
-//import appointmentRoutes from './appointmentRoutes';
+import storeRoutes from './storeRoutes';
 
 const router: Router = Router();
 
 // Sub-rotas
-router.use('/users', userRoutes); // Rotas relacionadas a usuários
-//router.use('/barbershops', barbershopRoutes); // Rotas relacionadas a barbearias
-//router.use('/appointments', appointmentRoutes); // Rotas relacionadas a agendamentos
+router.use('/users', userRoutes); 
+router.use('/stores', storeRoutes);
 
 export default router;
