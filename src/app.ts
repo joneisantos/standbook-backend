@@ -6,7 +6,7 @@ import connectToDatabase from './config/db';
 // Carregar variáveis de ambiente
 dotenv.config();
 
-const app: Application = express();
+export const app: Application = express();
 
 // Middlewares
 app.use(cors());

@@ -3,7 +3,7 @@ import { deleteUser, getAllUsers, getUserById, registerUser, updateUser } from '
 
 const router = Router();
 
-router.post('/register', registerUser);
+router.post('', registerUser);
 router.get('', getAllUsers);
 router.get('/:id', getUserById);
 router.put('/:id', updateUser);
