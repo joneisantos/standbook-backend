@@ -65,3 +65,79 @@ export const getUserById = async (req: Request, res: Response): Promise<void> =>
     res.status(500).json({ error: 'Erro interno no servidor' });
   }
 };
+
+export const updateUser = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const updates = req.body;
+    const { email } = req.body;
+
+    // Validação para garantir que o ID é válido
+    if (!id) {
+      res.status(400).json({ error: 'ID do usuário é obrigatório' });
+      return;
+    }
+
+    // Verificar se o e-mail já está sendo usado por outro usuário
+    if (email) {
+      const existingUser = await User.findOne({ email });
+      if (existingUser && existingUser.id.toString() !== id) {
+        res.status(400).json({ error: 'Favor utilizar outro e-mail válido' });
+        return;
+      }
+    }
+    
+    const allowedFields = ['name', 'email'];
+    const filteredUpdates = Object.keys(updates).reduce((obj, key) => {
+      if (allowedFields.includes(key)) {
+        obj[key] = updates[key];
+      }
+      return obj;
+    }, {} as Record<string, any>);
+
+    // Atualizar o usuário no banco de dados
+    const updatedUser = await User.findByIdAndUpdate(id, filteredUpdates, {
+      new: true, // Retorna o usuário atualizado
+      runValidators: true, // Aplica validações do schema
+    }).select('-password'); // Exclui o campo password da resposta
+
+    if (!updatedUser) {
+      res.status(404).json({ error: 'Usuário não encontrado' });
+      return;
+    }
+
+    res.status(200).json({
+      message: 'Usuário atualizado com sucesso',
+      user: updatedUser,
+    });
+  } catch (error) {
+    console.error('Erro ao atualizar usuário:', error);  
+  }
+};
+
+export const deleteUser = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+
+    // Validação para garantir que o ID é válido
+    if (!id) {
+      res.status(400).json({ error: 'ID do usuário é obrigatório' });
+      return;
+    }
+
+    // Remover o usuário pelo ID
+    const deletedUser = await User.findByIdAndDelete(id);
+
+    if (!deletedUser) {
+      res.status(404).json({ error: 'Usuário não encontrado' });
+      return;
+    }
+
+    res.status(200).json({
+      message: 'Usuário deletado com sucesso',
+      user: deletedUser,
+    });
+  } catch (error) {
+    console.error('Erro ao deletar usuário:', error);   
+  }
+};
