@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import Store from '../models/Store';
+import mongoose from 'mongoose';
 
 export const registerStore = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -38,6 +39,28 @@ export const getAllStores = async (req: Request, res: Response): Promise<void> =
     res.status(200).json(stores);
   } catch (error) {
     console.error('Erro ao listar estabelecimentos:', error);
+    res.status(500).json({ error: 'Erro interno no servidor' });
+  }
+};
+
+export const getStoreById = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.isValidObjectId(id)) {
+      res.status(400).json({ error: 'ID inválido' });
+      return;
+    }
+
+    const store = await Store.findById(id);
+    if (!store) {
+      res.status(404).json({ error: 'Estabelecimento não encontrado' });
+      return;
+    }
+
+    res.status(200).json(store);
+  } catch (error) {
+    console.error('Erro ao obter Estabelecimento:', error);
     res.status(500).json({ error: 'Erro interno no servidor' });
   }
 };
