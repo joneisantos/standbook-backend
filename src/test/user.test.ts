@@ -1,11 +1,8 @@
-import chai from 'chai';
-import { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import sinon from 'sinon';
 import User from '../models/User';
-import { app } from '../app';
 
-chai.use(chaiHttp);
+//chai.use(chaiHttp);
 
 describe('GET /users', () => {
   it('should get all users without passwords', async () => {

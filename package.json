@@ -21,6 +21,7 @@
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.10.5",
     "@types/sinon": "^17.0.3",
+    "@types/superagent": "^8.1.9",
     "chai": "^5.1.2",
     "chai-http": "^5.1.1",
     "mocha": "^11.0.1",
@@ -38,7 +39,10 @@
     "mongoose": "^8.9.3"
   },
   "compilerOptions": {
-    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
+    ],
     "esModuleInterop": true,
     "moduleResolution": "node",
     "target": "es6"
