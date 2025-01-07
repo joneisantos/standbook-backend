@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Employee from '../models/Employee';
 import Store from '../models/Store';
+import mongoose from 'mongoose';
 
 export const registerEmployee = async (req: Request, res: Response): Promise<void> => {
   try {    
@@ -43,6 +44,38 @@ export const registerEmployee = async (req: Request, res: Response): Promise<voi
     });
   } catch (error) {
     console.error('Erro ao registrar colaborador:', error);
+    res.status(500).json({ error: 'Erro interno no servidor' });
+  }
+};
+
+export const getAllEmployees = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const employees = await Employee.find(); 
+    res.status(200).json(employees);
+  } catch (error) {
+    console.error('Erro ao listar colaboradores:', error);
+    res.status(500).json({ error: 'Erro interno no servidor' });
+  }
+};
+
+export const getEmployeeById = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.isValidObjectId(id)) {
+      res.status(400).json({ error: 'ID inválido' });
+      return;
+    }
+
+    const employee = await Employee.findById(id);
+    if (!employee) {
+      res.status(404).json({ error: 'Colaborador não encontrado' });
+      return;
+    }
+
+    res.status(200).json(employee);
+  } catch (error) {
+    console.error('Erro ao obter colaborador:', error);
     res.status(500).json({ error: 'Erro interno no servidor' });
   }
 };
