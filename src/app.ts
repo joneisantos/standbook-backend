@@ -17,10 +17,13 @@ import routes from './routes';
 import userRoutes from './routes/userRoutes';
 import storeRoutes from './routes/storeRoutes';
 import employeeRoutes from './routes/employeeRoutes';
+import bookRoutes from './routes/bookRoutes';
+
 app.use('/api', routes);
 app.use('/users', userRoutes); 
 app.use('/stores', storeRoutes); 
 app.use('/employee', employeeRoutes); 
+app.use('/book', bookRoutes); 
 
 // Conecte-se ao MongoDB
 connectToDatabase();

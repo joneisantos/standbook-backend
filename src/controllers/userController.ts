@@ -86,7 +86,7 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
         return;
       }
     }
-    
+
     const allowedFields = ['name', 'email'];
     const filteredUpdates = Object.keys(updates).reduce((obj, key) => {
       if (allowedFields.includes(key)) {
@@ -111,7 +111,7 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
       user: updatedUser,
     });
   } catch (error) {
-    console.error('Erro ao atualizar usuário:', error);  
+    console.error('Erro ao atualizar usuário:', error);
   }
 };
 
@@ -138,6 +138,6 @@ export const deleteUser = async (req: Request, res: Response): Promise<void> => 
       user: deletedUser,
     });
   } catch (error) {
-    console.error('Erro ao deletar usuário:', error);   
+    console.error('Erro ao deletar usuário:', error);
   }
 };
