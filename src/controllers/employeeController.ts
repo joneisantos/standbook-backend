@@ -152,3 +152,30 @@ export const updateEmployee = async (req: Request, res: Response): Promise<void>
     console.error('Erro ao atualizar colaborador:', error);  
   }
 };
+
+export const deleteEmployee = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+
+    // Validação para garantir que o ID é válido
+    if (!id) {
+      res.status(400).json({ error: 'ID do colaborador é obrigatório' });
+      return;
+    }
+
+    // Remover o colaborador pelo ID
+    const deletedEmployee = await Employee.findByIdAndDelete(id);
+
+    if (!deletedEmployee) {
+      res.status(404).json({ error: 'Colaborador não encontrado' });
+      return;
+    }
+
+    res.status(200).json({
+      message: 'Colaborador deletado com sucesso',
+      user: deletedEmployee,
+    });
+  } catch (error) {
+    console.error('Erro ao deletar colaborador:', error);   
+  }
+};
