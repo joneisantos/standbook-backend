@@ -79,3 +79,20 @@ export const getEmployeeById = async (req: Request, res: Response): Promise<void
     res.status(500).json({ error: 'Erro interno no servidor' });
   }
 };
+
+export const getEmployeeByStoreId = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+
+    const employee = await Employee.find({ idStore: id });
+    if (!employee) {
+      res.status(404).json({ error: 'Colaborador não encontrado' });
+      return;
+    }
+
+    res.status(200).json(employee);
+  } catch (error) {
+    console.error('Erro ao obter colaborador:', error);
+    res.status(500).json({ error: 'Erro interno no servidor' });
+  }
+};
