@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Store from '../models/Store';
 import mongoose from 'mongoose';
+import Employee from '../models/Employee';
 
 export const registerStore = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -117,12 +118,20 @@ export const updateStore = async (req: Request, res: Response): Promise<void> =>
 export const deleteStore = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
+    const store = await Store.findById(id);
 
     // Validação para garantir que o ID é válido
     if (!id) {
       res.status(400).json({ error: 'ID do estabelecimento é obrigatório' });
       return;
     }
+
+    // Verificar se existe colaborador vinculado ao estabelecimento
+    const existingStore = await Employee.findOne({ idStore: store?.document});
+    if (existingStore) {
+      res.status(400).json({ error: 'Existe(m) colaborador(es) vinculado(s) ao estabelecimento' });
+      return;
+    }     
 
     // Remover o estabelecimento pelo ID
     const deletedStore = await Store.findByIdAndDelete(id);
