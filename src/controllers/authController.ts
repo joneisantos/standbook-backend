@@ -15,12 +15,13 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
       return;
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    console.log(`password: ${password} -----${isPasswordValid}---- user.password: ${user.password}`);
-    if (!isPasswordValid) {
+    const correct = await bcrypt.compare(password, user.password);
+    console.log(`password: ${password} -----${correct}---- user.password: ${user.password}`);
+    if (!correct) {
       res.status(401).json({ message: 'Senha incorreta' });
-      return;      
+      return;
     }
+
 
     // Gerar o token JWT
     const token = jwt.sign({ id: user._id, email: user.email }, SECRET_KEY, {

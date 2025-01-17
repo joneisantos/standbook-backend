@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import User from '../models/User';
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -20,8 +21,11 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
       return;
     }
 
+    // Encripta a senha
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     // Criar e salvar o usuário no MongoDB
-    const newUser = new User({ name, email, password });
+    const newUser = new User({ name, email, password: hashedPassword });
     const savedUser = await newUser.save();
 
     res.status(201).json({

@@ -4,10 +4,10 @@ import { authenticate } from '../middlewares/authMiddleware';
 
 const router = express.Router();
 
-router.post('', registerUser);
+router.post('', authenticate, registerUser);
 router.get('', authenticate, getAllUsers);
-router.get('/:id', getUserById);
-router.put('/:id', updateUser);
-router.delete('/:id', deleteUser);
+router.get('/:id', authenticate, getUserById);
+router.put('/:id', authenticate, updateUser);
+router.delete('/:id', authenticate, deleteUser);
 
 export default router;
