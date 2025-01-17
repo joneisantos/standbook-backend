@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "npm run test && npm run transpile && npm run start && npm run devcopy && cd dist",
     "start": "nodemon src/app.ts",
     "dev": "nodemon --watch src --exec ts-node src/app.ts",
-    "test": "mocha --require ts-node/register tests/**/*.ts"
+    "test": "mocha --require ts-node/register tests/**/*.ts",
+    "transpile": "tsc --watch"
   },
   "keywords": [],
   "author": "",
