@@ -24,11 +24,11 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
 
 
     // Gerar o token JWT
-    const token = jwt.sign({ id: user._id, email: user.email }, SECRET_KEY, {
+    const access_token = jwt.sign({ id: user._id, email: user.email }, SECRET_KEY, {
       expiresIn: '1h', // Define o tempo de validade do token
     });
 
-    res.status(200).json({ token });
+    res.status(200).json({ access_token });
   } catch (error) {
     console.error('Erro no login:', error);
     res.status(500).json({ message: 'Erro no servidor' });
