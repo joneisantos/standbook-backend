@@ -16,7 +16,6 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
     }
 
     const correct = await bcrypt.compare(password, user.password);
-    console.log(`password: ${password} -----${correct}---- user.password: ${user.password}`);
     if (!correct) {
       res.status(401).json({ message: 'Senha incorreta' });
       return;
