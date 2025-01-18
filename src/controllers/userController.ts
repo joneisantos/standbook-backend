@@ -5,7 +5,6 @@ import bcrypt from 'bcrypt';
 
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
   try {
-    //console.log(`log kkkk>>> ${JSON.stringify(req.body)}`);
     const { name, email, password } = req.body;
 
     // Validação simples

@@ -1,13 +1,18 @@
 import { createLogger, format, transports, Logger } from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
+import moment from 'moment-timezone';
 
 const { combine, timestamp, json } = format;
+
+const getBRTime = (): string => {
+  return moment().tz('America/Sao_Paulo').format('YYYY-MM-DD HH:mm:ss');
+};
 
 // Criação do logger
 const logger: Logger = createLogger({
   level: 'info', // Níveis: error, warn, info, http, verbose, debug, silly
   format: combine(
-    timestamp(),
+    timestamp({ format: getBRTime }),
     json() // Salva logs no formato JSON
   ),
   transports: [
@@ -18,12 +23,12 @@ const logger: Logger = createLogger({
       maxFiles: '14d', // Retém logs por 14 dias
     }),
     // Salva apenas erros em outro arquivo
-    new DailyRotateFile({
+    /*new DailyRotateFile({
       filename: 'logs/error-%DATE%.log',
       level: 'error',
       datePattern: 'YYYY-MM-DD',
       maxFiles: '14d',
-    }),
+    }),*/
   ],
 });
 
