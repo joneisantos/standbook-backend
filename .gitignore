@@ -11,3 +11,6 @@ echo ".env" >> .gitignore
 
 # dist
 /dist
+
+# logs
+/logs

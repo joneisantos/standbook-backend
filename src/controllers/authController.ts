@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User'; // Caminho do modelo User
+import logger from '../config/logger';
 
 const SECRET_KEY = process.env.JWT_SECRET || 'jonecester1910';
 
@@ -11,12 +12,14 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
   try {
     const user = await User.findOne({ email });
     if (!user) {
+      logger.error({ message: 'tentando autenticar com usuário não encontrado', email: email });
       res.status(404).json({ message: 'Usuário não encontrado' });
       return;
     }
 
     const correct = await bcrypt.compare(password, user.password);
     if (!correct) {
+      logger.error({ message: 'token não gerado por senha incorreta', email: user.email });
       res.status(401).json({ message: 'Senha incorreta' });
       return;
     }
@@ -27,8 +30,10 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
       expiresIn: '1h', // Define o tempo de validade do token
     });
 
+    logger.info({ message: 'token gerado', email: user.email });
     res.status(200).json({ access_token });
   } catch (error) {
+    logger.error({ message: 'Erro no login', error: error });
     console.error('Erro no login:', error);
     res.status(500).json({ message: 'Erro no servidor' });
   }

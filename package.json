@@ -24,6 +24,7 @@
     "@types/node": "^22.10.5",
     "@types/sinon": "^17.0.3",
     "@types/superagent": "^8.1.9",
+    "@types/winston": "^2.4.4",
     "chai": "^5.1.2",
     "chai-http": "^5.1.1",
     "mocha": "^11.0.1",
@@ -39,7 +40,9 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.9.3"
+    "mongoose": "^8.9.3",
+    "winston": "^3.17.0",
+    "winston-daily-rotate-file": "^5.0.0"
   },
   "compilerOptions": {
     "typeRoots": [
