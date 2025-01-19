@@ -1,13 +1,14 @@
 import { Router } from 'express';
 import { deleteEmployee, getAllEmployees, getEmployeeById, getEmployeeByStoreId, registerEmployee, updateEmployee } from '../controllers/employeeController';
+import { authenticate } from '../middlewares/authMiddleware';
 
 const router = Router();
 
-router.post('', registerEmployee);
-router.get('', getAllEmployees);
-router.get('/:id', getEmployeeById);
-router.get('/store/:id', getEmployeeByStoreId);
-router.put('/:id', updateEmployee);
-router.delete('/:id', deleteEmployee);
+router.post('', authenticate, registerEmployee);
+router.get('', authenticate, getAllEmployees);
+router.get('/:id', authenticate, getEmployeeById);
+router.get('/store/:id', authenticate, getEmployeeByStoreId);
+router.put('/:id', authenticate, updateEmployee);
+router.delete('/:id', authenticate, deleteEmployee);
 
 export default router;
