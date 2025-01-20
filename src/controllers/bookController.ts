@@ -5,16 +5,16 @@ import { validateDateBook } from '../validators/bookValidator';
 export const registerBook = async (req: Request, res: Response): Promise<void> => {
   try {
 
-    const { employeeId, datetime, userId, services, description, status } = req.body;
+    const { employeeId, start, end, userId, services, title, status } = req.body;
 
     // Validação simples
-    if (!employeeId || !datetime || !userId || !services || !status) {
+    if (!employeeId || !start|| !end || !userId || !services || !status) {
       res.status(400).json({ error: 'Todos os campos são obrigatórios' });
       return;
     }
 
     // Checar se já existe agendamento para a mesma data e horário
-    const existingBookDate = await validateDateBook(datetime);
+    const existingBookDate = await validateDateBook(start);
     if (existingBookDate) {
       res.status(400).json({ error: 'Horário não disponível, favor selecionar outro horário' });
       return;
@@ -22,10 +22,11 @@ export const registerBook = async (req: Request, res: Response): Promise<void> =
 
     const newBooking = new Book({
       employeeId: employeeId,
-      datetime: datetime, //new Date('2025-01-05T14:00:00Z')
+      start: start, //new Date('2025-01-05T14:00:00Z')
+      end: end, //new Date('2025-01-05T14:30:00Z')
       userId: userId,
       services: services,
-      description: description,
+      title: title,
       status: status,
     });
 

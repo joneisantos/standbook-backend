@@ -7,10 +7,11 @@ interface IService {
 
 interface IBook extends Document {
   employeeId: Schema.Types.ObjectId; // ID do funcionário/barbeiro
-  datetime: Date; // Data e hora do agendamento
+  start: Date; // Data e hora inicial do agendamento
+  end: Date; // Data e hora inicial do agendamento
   userId: Schema.Types.ObjectId; // ID do usuário/cliente
   services: IService[]; // Array de serviços (nome e preço)
-  description?: string; // Descrição opcional do agendamento
+  title?: string; // Título do agendamento
   status: 'pendente' | 'confirmado' | 'finalizado' | 'cancelado'; // Status do agendamento
 }
 
@@ -22,10 +23,11 @@ const ServiceSchema = new Schema<IService>({
 const BookSchema = new Schema<IBook>(
   {
     employeeId: { type: Schema.Types.ObjectId, ref: 'Employee', required: true },
-    datetime: { type: Date, required: true },
+    start: { type: Date, required: true },
+    end: { type: Date, required: true },
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     services: { type: [ServiceSchema], required: true }, // Campo com subdocumentos
-    description: { type: String, default: '' },
+    title: { type: String, default: '' },
     status: {
       type: String,
       enum: ['pendente', 'confirmado', 'finalizado', 'cancelado'],
