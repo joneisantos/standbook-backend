@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, phone, password } = req.body;
 
     // Validação simples
     if (!name || !email || !password) {
@@ -24,7 +24,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Criar e salvar o usuário no MongoDB
-    const newUser = new User({ name, email, password: hashedPassword });
+    const newUser = new User({ name, email, phone, password: hashedPassword });
     const savedUser = await newUser.save();
 
     res.status(201).json({
@@ -90,7 +90,7 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
       }
     }
 
-    const allowedFields = ['name', 'email'];
+    const allowedFields = ['name', 'email','phone']; 
     const filteredUpdates = Object.keys(updates).reduce((obj, key) => {
       if (allowedFields.includes(key)) {
         obj[key] = updates[key];
