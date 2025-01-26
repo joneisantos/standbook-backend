@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User'; // Caminho do modelo User
 import logger from '../config/logger';
+import { sendEmail } from '../services/emailService';
 
 const SECRET_KEY = process.env.JWT_SECRET || 'jonecester1910';
 
@@ -29,6 +30,21 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
     const access_token = jwt.sign({ id: user._id, email: user.email }, SECRET_KEY, {
       expiresIn: '1h', // Define o tempo de validade do token
     });
+
+
+    try {
+      await sendEmail(
+        'jjonei.santos@gmail.com',
+        'Assunto do E-mail',
+        'Conteúdo do e-mail em texto simples',
+        '<p>Conteúdo do e-mail em <strong>HTML</strong></p>'
+      );
+      console.log('E-mail enviado com sucesso!');
+      logger.info({ message: 'E-mail enviado com sucesso' });
+    } catch (error) {
+      console.error('Erro ao enviar e-mail:', error);
+      logger.error({ message: 'Erro ao enviar e-mail', error: error });
+    }
 
     logger.info({ message: 'token gerado', email: user.email });
     res.status(200).json({ access_token });

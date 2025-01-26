@@ -2,11 +2,11 @@ import nodemailer from 'nodemailer';
 
 // Configuração do transporte de e-mail
 const transporter = nodemailer.createTransport({
-  host: 'smtp.mailtrap.io', // Substitua pelo host SMTP do seu provedor
+  host: 'smtp-mail.outlook.com', // Substitua pelo host SMTP do seu provedor
   port: 587, // Porta SMTP
   auth: {
-    user: 'seu_usuario', // Substitua pelo seu usuário SMTP
-    pass: 'sua_senha', // Substitua pela sua senha SMTP
+    user: 'jonei.santos@outlook.com.br', // Substitua pelo seu usuário SMTP
+    pass: 'Sqlserver@2019', // Substitua pela sua senha SMTP
   },
 });
 
