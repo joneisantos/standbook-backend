@@ -5,8 +5,8 @@ const transporter = nodemailer.createTransport({
   host: 'smtp-mail.outlook.com', // Substitua pelo host SMTP do seu provedor
   port: 587, // Porta SMTP
   auth: {
-    user: 'jonei.santos@outlook.com.br', // Substitua pelo seu usuário SMTP
-    pass: 'Sqlserver@2019', // Substitua pela sua senha SMTP
+    user: 'standbook@outlook.com.br', // Substitua pelo seu usuário SMTP
+    pass: 'basicAuthentication', // Substitua pela sua senha SMTP
   },
 });
 
