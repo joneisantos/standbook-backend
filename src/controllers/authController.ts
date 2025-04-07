@@ -3,7 +3,6 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User'; // Caminho do modelo User
 import logger from '../config/logger';
-import { sendEmail } from '../services/emailService';
 
 const SECRET_KEY = process.env.JWT_SECRET || 'jonecester1910';
 
@@ -31,7 +30,7 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
       expiresIn: '1h', // Define o tempo de validade do token
     });
 
-
+    /*
     try {
       await sendEmail(
         'jjonei.santos@gmail.com',
@@ -44,7 +43,7 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
     } catch (error) {
       console.error('Erro ao enviar e-mail:', error);
       logger.error({ message: 'Erro ao enviar e-mail', error: error });
-    }
+    }*/
 
     logger.info({ message: 'token gerado', email: user.email });
     res.status(200).json({ access_token });
