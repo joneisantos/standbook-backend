@@ -105,6 +105,11 @@ export const updateBook = async (req: Request, res: Response): Promise<void> => 
       return obj;
     }, {} as Record<string, any>);
 
+    if(filteredUpdates.status != "cancelado" && filteredUpdates.status != "confirmado" && filteredUpdates.status != "pendente"){
+      res.status(400).json({ error: 'Status deve ser um dos valores [cancelado,confirmado,pendente]' });
+      return;
+    }    
+
     // Atualizar o agendamento no banco de dados
     const updatedBook = await Book.findByIdAndUpdate(id, filteredUpdates, {
       new: true, // Retorna o agendamento atualizado
@@ -118,7 +123,7 @@ export const updateBook = async (req: Request, res: Response): Promise<void> => 
 
     res.status(200).json({
       message: 'Agendamento atualizado com sucesso',
-      user: updatedBook,
+      book: updatedBook,
     });
   } catch (error) {
     console.error('Erro ao atualizar agendamento:', error);

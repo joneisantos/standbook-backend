@@ -26,7 +26,7 @@ const BookSchema = new Schema<IBook>(
     start: { type: Date, required: true },
     end: { type: Date, required: true },
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    services: { type: [ServiceSchema], required: true }, // Campo com subdocumentos
+    services: { type: [ServiceSchema], required: true },
     title: { type: String, default: '' },
     status: {
       type: String,
@@ -35,7 +35,7 @@ const BookSchema = new Schema<IBook>(
     },
   },
   {
-    timestamps: true, // Inclui campos createdAt e updatedAt automaticamente
+    timestamps: true,
   }
 );
 
