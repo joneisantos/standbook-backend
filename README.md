@@ -86,3 +86,32 @@ standbook-backend/
 - `npm run dev` - Inicia o servidor em modo desenvolvimento
 - `npm run build` - Compila o projeto TypeScript
 - `npm start` - Inicia o servidor em modo produção
+
+## Rodando com Docker
+
+1. Construa e inicie os containers:
+```bash
+docker-compose up -d
+```
+
+2. Para parar os containers:
+```bash
+docker-compose down
+```
+
+### Publicando no Docker Hub
+
+1. Faça login no Docker Hub:
+```bash
+docker login
+```
+
+2. Construa a imagem com sua tag:
+```bash
+docker build -t seu-usuario/standbook-backend:latest .
+```
+
+3. Envie a imagem para o Docker Hub:
+```bash
+docker push seu-usuario/standbook-backend:latest
+```
